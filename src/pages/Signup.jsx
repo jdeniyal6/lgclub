@@ -1,63 +1,76 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabase";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-
-  const handleSignup = async () => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          username,
-        },
-      },
-    });
-
-    if (error) {
-      alert(error.message);
-    } else {
-      alert("Signup successful!");
-    }
-  };
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [referralCode, setReferralCode] = useState("");
+  const [agree, setAgree] = useState(false);
 
   return (
-    <div>
-      <h1>Create Account</h1>
+    <div style={{ maxWidth: "350px", margin: "40px auto" }}>
+      <h2 style={{ textAlign: "center" }}>Create Account</h2>
 
       <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        type="tel"
+        placeholder="Mobile Number"
+        value={mobile}
+        onChange={(e) => setMobile(e.target.value)}
+        style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
       />
-
-      <br /><br />
-
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      <br /><br />
 
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
       />
 
-      <br /><br />
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
+      />
 
-      <button onClick={handleSignup}>
-        Sign Up
+      <input
+        type="text"
+        placeholder="Referral Code (Optional)"
+        value={referralCode}
+        onChange={(e) => setReferralCode(e.target.value)}
+        style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
+      />
+
+      <label>
+        <input
+          type="checkbox"
+          checked={agree}
+          onChange={(e) => setAgree(e.target.checked)}
+        />{" "}
+        I agree to the Terms & Conditions
+      </label>
+
+      <br />
+      <br />
+
+      <button
+        style={{
+          width: "100%",
+          padding: "12px",
+          fontSize: "16px",
+          cursor: "pointer",
+        }}
+      >
+        SIGN UP
       </button>
+
+      <p style={{ textAlign: "center", marginTop: "20px" }}>
+        Already have an account?{" "}
+        <Link to="/login">Login</Link>
+      </p>
     </div>
   );
 }
