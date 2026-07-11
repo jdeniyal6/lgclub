@@ -1,48 +1,65 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabase";
+import { Link } from "react-router-dom";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      alert(error.message);
-    } else {
-      alert("Login successful!");
-    }
-  };
+  const [remember, setRemember] = useState(false);
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div style={{ maxWidth: "350px", margin: "40px auto" }}>
+      <h2 style={{ textAlign: "center" }}>LOGIN</h2>
 
       <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        type="tel"
+        placeholder="Mobile Number"
+        value={mobile}
+        onChange={(e) => setMobile(e.target.value)}
+        style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
       />
-
-      <br /><br />
 
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        style={{ width: "100%", padding: "10px", marginBottom: "15px" }}
       />
 
-      <br /><br />
+      <label>
+        <input
+          type="checkbox"
+          checked={remember}
+          onChange={(e) => setRemember(e.target.checked)}
+        />{" "}
+        Remember Me
+      </label>
 
-      <button onClick={handleLogin}>
-        Login
+      <br />
+      <br />
+
+      <button
+        style={{
+          width: "100%",
+          padding: "12px",
+          fontSize: "16px",
+        }}
+      >
+        LOGIN
       </button>
+
+      <p style={{ textAlign: "center", marginTop: "15px" }}>
+        Don't have an account?{" "}
+        <Link to="/signup">REGISTER</Link>
+      </p>
+
+      <p style={{ textAlign: "center" }}>
+        <a href="#">Forgot Password?</a>
+      </p>
+
+      <p style={{ textAlign: "center" }}>
+        <a href="#">Customer Support</a>
+      </p>
     </div>
   );
 }
